@@ -100,7 +100,17 @@ class Search:
             self.products.append(product)
 
     def __get_country(self, article):
-        return 'china'
+        url = 'https://www.lamoda.ru/p/' + article + '/'
+        r = requests.get(url)
+        text = r.text
+        text = str(text)
+
+        country_index = text.find('"Страна производства"') + 31
+        country = ''
+        while text[country_index] != '"':
+            country += text[country_index]
+            country_index += 1
+        return country
 
     def __pack_to_sheet(self, file_name):
         workbook = Workbook()
