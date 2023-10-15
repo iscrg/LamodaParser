@@ -2,14 +2,7 @@ import requests
 from dataclasses import dataclass
 import lamoda
 a = lamoda.Search('штаны', 'file')
-for product in a.get_products():
-    print(
-        product.title,
-        product.brand,
-        product.price,
-        product.discount,
-        product.article,
-    )
+
 '''
 request = input('Введите поисковый запрос: ').replace(' ', '%20')
 url = 'https://www.lamoda.ru/catalogsearch/result/?q=' + request + '&&submit=y&page=2&sort=price_asc'

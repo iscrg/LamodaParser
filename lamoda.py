@@ -1,4 +1,5 @@
 import requests
+from openpyxl import Workbook
 from dataclasses import dataclass
 
 
@@ -102,5 +103,30 @@ class Search:
         return 'china'
 
     def __pack_to_sheet(self, file_name):
-        pass
+        workbook = Workbook()
+        worksheet = workbook.active
 
+        worksheet.append(
+            [
+                'Title',
+                'Brand',
+                'Price',
+                'Discount',
+                'Article',
+                'Country'
+            ]
+        )
+
+        for product in self.products:
+            worksheet.append(
+                [
+                    product.title,
+                    product.brand,
+                    product.price,
+                    product.discount,
+                    product.article,
+                    product.country
+                ]
+            )
+
+        workbook.save(filename=f"{file_name}.xlsx")
