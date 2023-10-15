@@ -14,13 +14,13 @@ class Prod:
 
 
 class Search:
-    def __init__(self, request, file_name):
+    def __init__(self, request, filename):
         self.products = []
 
         pages = self.__request(request)
         self.__page_turner(request, pages)
 
-        self.__pack_to_sheet(file_name)
+        self.__pack_to_sheet(filename)
 
     def __request(self, request):
         url = 'https://www.lamoda.ru/catalogsearch/result/?q=' + request + '&&submit=y&page=1&sort=price_asc&sort=price_asc'
@@ -40,8 +40,6 @@ class Search:
             r = requests.get(url)
             text = r.text
             self.__page_handler(text)
-
-            print(f'{i} page processed successfully!')
 
     def __page_handler(self, text):
         while text.count('labels') != 1:
@@ -100,6 +98,8 @@ class Search:
             self.products.append(product)
 
     def __get_country(self, article):
+        print(f'Processing of {article} product...')
+
         url = 'https://www.lamoda.ru/p/' + article + '/'
         r = requests.get(url)
         text = r.text
@@ -112,7 +112,7 @@ class Search:
             country_index += 1
         return country
 
-    def __pack_to_sheet(self, file_name):
+    def __pack_to_sheet(self, filename):
         workbook = Workbook()
         worksheet = workbook.active
 
@@ -139,4 +139,4 @@ class Search:
                 ]
             )
 
-        workbook.save(filename=f"{file_name}.xlsx")
+        workbook.save(filename=f"{filename}.xlsx")
