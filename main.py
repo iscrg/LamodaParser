@@ -1,15 +1,25 @@
 import requests
 from dataclasses import dataclass
-#import lamoda
-
-customer_request = input('Введите поисковый запрос: ').replace(' ', '%20')
-url = 'https://www.lamoda.ru/catalogsearch/result/?q=' + customer_request + '&&submit=y&page=1'
+import lamoda
+a = lamoda.Search('штаны', 'file')
+for product in a.get_products():
+    print(
+        product.title,
+        product.brand,
+        product.price,
+        product.discount,
+        product.article,
+    )
+'''
+request = input('Введите поисковый запрос: ').replace(' ', '%20')
+url = 'https://www.lamoda.ru/catalogsearch/result/?q=' + request + '&&submit=y&page=2&sort=price_asc'
 
 print(url)
 
 r = requests.get(url)
 text = r.text
 text = str(text)
+
 
 products = []
 
@@ -44,7 +54,7 @@ while text.count('labels') != 1:
     text = text[brand_index:]
 
     title_index = text.find('"name"') + 8
-    print(text[title_index-7:title_index+50])
+
     title = ''
     while text[title_index] != '"':
         title += text[title_index]
@@ -77,8 +87,6 @@ while text.count('labels') != 1:
 
     products.append(product)
 
-products = sorted(products, key=lambda x: x.price)
-
 for product in products:
     print(
         product.title,
@@ -87,3 +95,4 @@ for product in products:
         product.discount,
         product.article,
     )
+'''
