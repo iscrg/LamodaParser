@@ -43,7 +43,7 @@ while text.count('labels') != 1:
 
     text = text[brand_index:]
 
-    title_index = text.find('name') + 7
+    title_index = text.find('"name"') + 8
     print(text[title_index-7:title_index+50])
     title = ''
     while text[title_index] != '"':
